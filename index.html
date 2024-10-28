@@ -1,0 +1,110 @@
+html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задание</title>
+    <style>
+        p {
+            color: blue;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="header">Заголовок</h1>
+    <p id="paragraph">Это параграф.</p>
+    <ul id="list">
+        <li>Первый пункт</li>
+        <li>Второй пункт</li>
+        <li>Третий пункт</li>
+    </ul>
+    <img id="image" src="image.jpg" alt="Картинка">
+    <a id="link" href="#">Ссылка</a>
+    <button onclick="addListItem()">Добавить элемент списка</button>
+    <button onclick="deleteLastItem()">Удалить последний элемент</button>
+    <button onclick="changeColor()">Изменить цвет текста</button>
+    <br><br>
+    <input type="checkbox" id="toggleParagraph" onclick="toggleDisplay()">
+    <label for="toggleParagraph">Показать/скрыть параграф</label>
+    <br><br>
+    <div id="myDiv" style="width: 200px; height: 100px; background-color: lightgray;">Пример блока</div>
+    <br>
+    <button onclick="getDimensions()">Получить размеры элемента</button>
+    <form id="myForm">
+        Имя: <input type="text" id="name"><br><br>
+        Email: <input type="email" id="email"><br><br>
+        <button type="submit">Отправить</button>
+    </form>
+    <p id="errorMessage"></p>
+
+    <script>
+        // Изменение текста заголовка
+        document.querySelector('#header').innerText = 'Новый заголовок';
+
+        // Добавление номеров к элементам списка
+        document.querySelectorAll('#list li').forEach((item, index) => {
+            item.innerText += ` ${index + 1}`;
+        });
+
+        // Изменение атрибута src у изображения
+        document.getElementById('image').setAttribute('src', 'newImage.jpg');
+
+        // Изменение текста и URL ссылки
+        document.getElementById('link').innerHTML = 'Новая ссылка';
+        document.getElementById('link').setAttribute('href', 'https://example.com/');
+
+        // Добавление нового элемента списка
+        function addListItem() {
+            const ul = document.getElementById('list');
+            const newLi = document.createElement('li');
+            newLi.textContent = 'Новый элемент';
+            ul.appendChild(newLi);
+        }
+
+        // Удаление последнего элемента списка
+        function deleteLastItem() {
+            const ul = document.getElementById('list');
+            if (ul.children.length > 0) {
+                ul.removeChild(ul.lastElementChild);
+            }
+        }
+
+        // Изменение цвета текста параграфа
+        function changeColor() {
+            const paragraph = document.getElementById('paragraph');
+            paragraph.style.color = paragraph.style.color === 'blue' ? 'black' : 'blue';
+        }
+
+        // Показ/скрытие параграфа
+        function toggleDisplay() {
+            const checkbox = document.getElementById('toggleParagraph');
+            const paragraph = document.getElementById('paragraph');
+            paragraph.style.display = checkbox.checked ? 'none' : '';
+        }
+
+        // Определение координат и размеров элемента
+        function getDimensions() {
+            const myDiv = document.getElementById('myDiv');
+            const rect = myDiv.getBoundingClientRect();
+            console.log(rect);
+            alert(`Ширина: ${rect.width}, Высота: ${rect.height}`);
+        }
+
+        // Валидация формы
+        document.getElementById('myForm').onsubmit = function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (!name || !email) {
+                errorMessage.textContent = 'Заполните все поля!';
+            } else {
+                errorMessage.textContent = '';
+                alert('Форма успешно отправлена!');
+            }
+        };
+    </script>
+</body>
+</html>
